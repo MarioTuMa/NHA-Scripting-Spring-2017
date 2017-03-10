@@ -18,7 +18,7 @@ ary.each do |row|
 end
 CSV.open("formednumbers.csv", "wb") do |csv|
   goodnumbers.each do |telephonenumber|
-    if telephonenumber.length==[11]
+    if telephonenumber.length==11
 
       csv << ["1-"+telephonenumber[1]+telephonenumber[2]+telephonenumber[3]+"-"+telephonenumber[4]+telephonenumber[5]+telephonenumber[6]+"-"+telephonenumber[7]+telephonenumber[8]+telephonenumber[9]+telephonenumber[10]]
     else
