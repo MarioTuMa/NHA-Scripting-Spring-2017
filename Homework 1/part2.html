@@ -1,21 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   </head>
+  <style>
+     #map {
+      height: 800px;
+      width: 100%;
+     }
+  </style>
   <body>
-
-
+    <div id="map"></div>
     <script>
-      $.getJSON({
-        url:"places.json",
-        success: function(places){
-          console.log(places)
-        },
-        error: function(err){
-          console.log(err, "u failed")
+
+
+
+    function shuffle(array) {
+      var currentIndex = array.length, temporaryValue, randomIndex;
+        while (0 !== currentIndex) {
+          randomIndex = Math.floor(Math.random() * currentIndex);
+          currentIndex -= 1;
+          temporaryValue = array[currentIndex];
+          array[currentIndex] = array[randomIndex];
+          array[randomIndex] = temporaryValue;
         }
-      })
+
+        return array;
+      }
+
+
+        function initMap() {
+          var geocoder = new google.maps.Geocoder();
+          let url="places.json";
+          var crimelabels = 'C';
+          var waterlabels = 'W';
+            $.get(url,function(data){
+              let crime=data.crime
+              let water=data.water
+              crime=shuffle(crime)
+              water=shuffle(water)
+              let crimelocations=[]
+              let waterlocations=[]
+              var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 10,
+                center: {lat: 40.663, lng: -73.944}
+              });
+              for(i=0;i<50;i++){
+                crimelocations.push(crime[i].coordinates)
+                console.log(crime[i].coordinates)
+                zip=(water[i].zip)
+                geocoder.geocode({'address': String(zip)}, function(results, status) {
+                  if (status === 'OK') {
+                    let loc={
+                      lat:(results[0].geometry.bounds.f.b+results[0].geometry.bounds.f.f)/2,
+                      lng:(results[0].geometry.bounds.b.b+results[0].geometry.bounds.b.f)/2
+                    }
+                    console.log(water[3])
+                    console.log(loc)
+                    console.log("yay")
+                    waterlocations.push(loc);
+                    var watermarkers = waterlocations.map(function(location, i) {
+                      return new google.maps.Marker({
+                        position: location,
+                        label: waterlabels[i % waterlabels.length],
+                        title: water[i].reason_for_complaint
+                      });
+                      google.maps.Marker.addListener('hover', function() {
+                        infowindow.open(map, marker);
+                      });
+                    });
+
+                    var crimemarkers = crimelocations.map(function(location, i) {
+
+                      return new google.maps.Marker({
+                        position: location,
+                        label: crimelabels[i % crimelabels.length],
+                        title: crime[i].crime
+                      });
+                      google.maps.Marker.addListener('hover', function() {
+                        infowindow.open(map, marker);
+                      });
+                    });
+                    var crimemarkerCluster = new MarkerClusterer(map, crimemarkers,
+                      {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+                    var watermarkerCluster = new MarkerClusterer(map, watermarkers,
+                      {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+                  } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                  }
+                  console.log(waterlocations)
+
+
+                });
+              }
+
+              /*var crimemarkers = crimelocations.map(function(location, i) {
+
+                return new google.maps.Marker({
+                  position: location,
+                  label: crimelabels[i % crimelabels.length],
+                  title: crime[i].crime
+                });
+                google.maps.Marker.addListener('hover', function() {
+                  infowindow.open(map, marker);
+                });
+              });*/
+
+
+
+
+
+
+
+
+          })
+        }
+
+      </script>
+      <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+    </script>
+      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgvMvFwad7QwQI3wlFjN-lld69R5mfwxw&callback=initMap">
     </script>
   </body>
 </html>
