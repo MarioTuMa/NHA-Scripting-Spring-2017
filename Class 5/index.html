@@ -9,7 +9,7 @@
         console.log(data)
 	 let deals=data.records.deals
 	 for(i=0;i<deals.length;i++){
-		console.log(deals[i].price, deals[i].description, deals[i].image_urls.medium)
+		console.log(deals[i].price, deals[i].description.split(">"), deals[i].image_urls.medium)
 	 }
       })
     </script>
