@@ -12,14 +12,14 @@
         console.log(data)
 	 let deals=data.records.deals
 	 for(i=0;i<deals.length;i++){
-		//console.log(deals[i].price, deals[i].description.split(">"), deals[i].image_urls.medium)
+		let price=deals[i].price;
+	      	let name=deals[i].description.split(">")[3].split(">")[0];
+	      	let img_url=deals[i].image_urls.medium;
+	      $("ol").append("<li class='item'><h3>"+name+"</h3>"+" "+price+"<br><img src='"+img_url+"'></img></li>");
+	      
 	 }
 	 
-		let price=deals[0].price;
-	      	let name=deals[0].description.split(">")[3].split(">")[0];
-	      	let img_url=deals[0].image_urls.medium;
-	      $("ol").append("<li class='item'><h3>"+name+"</h3>"+price+"<br><img src='"+img_url+"'></img></li>");
-	      
+		
       })
 	$(".item").click(function(click){
 		console.log(click)
