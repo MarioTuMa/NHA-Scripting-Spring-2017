@@ -12,10 +12,11 @@
         console.log(data)
 	 let deals=data.records.deals
 	 for(i=0;i<deals.length;i++){
+		let title=deals[i].title;
 		let price=deals[i].price;
 	      	let name=deals[i].description.split(">")[3].split(">")[0];
 	      	let img_url=deals[i].image_urls.medium;
-	      $("ol").append("<li class='item'><h3>"+name+"</h3>"+" "+price+"<br><img src='"+img_url+"'></img><br><button>Look for coupons from this seller</button></li>");
+	      $("ol").append("<li class='item'><h3>"+title+"</h3>"+" "+price+"<br><img src='"+img_url+"'></img><br><button>Look for coupons from"+name+"</button></li>");
 	      
 	 }
 	 
