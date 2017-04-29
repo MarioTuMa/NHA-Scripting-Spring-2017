@@ -4,6 +4,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	</head>
 		<body>
+			<ol>
+				
+			</ol>
     <script>
       $.getJSON('offersfrombrad.json',function(data){
         console.log(data)
@@ -11,8 +14,16 @@
 	 for(i=0;i<deals.length;i++){
 		//console.log(deals[i].price, deals[i].description.split(">"), deals[i].image_urls.medium)
 	 }
-	 console.log(deals[0].price, deals[0].description.split(">")[3].split(">")[0], deals[0].image_urls.medium)
+	 
+		let price=deals[0].price;
+	      	let name=deals[0].description.split(">")[3].split(">")[0];
+	      	let img_url=deals[0].image_urls.medium;
+	      $("ol").append("<li class='item'><h3>"+name+"</h3>"+price+"<br><img src='"+img_url+"'></img></li>");
+	      
       })
+	$(".item").click(function(click){
+		console.log(click)
+	})
     </script>
 	  </body>
 </html>
