@@ -15,14 +15,14 @@
 		let price=deals[i].price;
 	      	let name=deals[i].description.split(">")[3].split(">")[0];
 	      	let img_url=deals[i].image_urls.medium;
-	      $("ol").append("<li class='item'><h3>"+name+"</h3>"+" "+price+"<br><img src='"+img_url+"'></img></li>");
+	      $("ol").append("<li class='item'><h3>"+name+"</h3>"+" "+price+"<br><img src='"+img_url+"'></img><br><button>Look for coupons from this seller</button></li>");
 	      
 	 }
 	 
 		
       })
-	$(".item").click(function(click){
-		console.log(click)
+	$("button").click(function(){
+		console.log("hello")
 	})
     </script>
 	  </body>
