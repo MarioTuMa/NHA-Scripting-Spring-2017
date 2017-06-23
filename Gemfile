@@ -1,0 +1,5 @@
+source 'https://rubygems.org'
+gem 'maruku'
+gem 'reverse-markdown'
+gem 'mechanize'
+gem 'watir-webdriver'
